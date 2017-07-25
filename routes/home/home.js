@@ -9,7 +9,7 @@ res.render('home/home',{
 
 })
 });
-
+//get genres
 router.get('/api/genres',function(req,res){
 Genre.getGenres(function(err,genres){
 if(err){
@@ -20,7 +20,7 @@ if(err){
 })
 });
 
-
+//post genre
 router.post('/api/genres',function(req,res){
     let genre = req.body;
 Genre.addGenre(genre,function(err,genre){
@@ -32,6 +32,35 @@ if(err){
 })
 });
 
+//update genre
+router.put('/api/genres/:_id',function(req,res){
+    let id=req.params._id
+    let genre = req.body;
+Genre.updateGenre(id,genre,{},function(err,genre){
+if(err){
+    throw err;
+}else{
+    res.json(genre);
+}
+})
+});
+
+
+//delete genre
+router.delete('/api/genres/:_id',function(req,res){
+    let id=req.params._id
+
+Genre.deleteGenre(id,function(err,genre){
+if(err){
+    throw err;
+}else{
+    res.json(genre);
+}
+})
+});
+
+
+//get books
 router.get('/api/books',function(req,res){
 Book.getBooks(function(err,books){
 if(err){
@@ -42,6 +71,7 @@ if(err){
 })
 });
 
+//add book
 router.post('/api/books',function(req,res){
     let book = req.body;
 Book.addBook(book,function(err,book){
@@ -52,6 +82,34 @@ if(err){
 }
 })
 }); 
+
+//update book
+router.put('/api/books/:_id',function(req,res){
+    let id=req.params._id;
+    let book = req.body;
+Book.updateBook(id,book,{},function(err,book){
+if(err){
+    throw err;
+}else{
+    res.json(book);
+}
+})
+}); 
+
+//delete book
+router.delete('/api/books/:_id',function(req,res){
+    let id=req.params._id;
+
+Book.deleteBook(id,function(err,book){
+if(err){
+    throw err;
+}else{
+    res.json(book);
+}
+})
+});  
+
+//get book by id
 router.get('/api/book/:_id',function(req,res){
 Book.getBookById(req.params._id,function(err,book){
 if(err){
